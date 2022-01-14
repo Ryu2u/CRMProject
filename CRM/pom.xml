@@ -57,11 +57,11 @@
       <version>1.2</version>
     </dependency>
 
-    <!--jackson依赖-->
+    <!--springmvc依赖-->
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>2.0.1</version>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>5.2.5.RELEASE</version>
     </dependency>
 
     <!--spring依赖-->
@@ -91,12 +91,7 @@
       <artifactId>mybatis-spring</artifactId>
       <version>1.3.1</version>
     </dependency>
-    <!--spring web依赖-->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>5.2.5.RELEASE</version>
-    </dependency>
+
 
     <!--druid连接池-->
     <dependency>
@@ -105,6 +100,12 @@
       <version>1.1.12</version>
     </dependency>
 
+    <!--jackson依赖-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.0.1</version>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
