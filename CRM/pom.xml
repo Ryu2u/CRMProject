@@ -77,7 +77,6 @@
       <artifactId>spring-tx</artifactId>
       <version>5.2.5.RELEASE</version>
     </dependency>
-
     <!--spring事务依赖-->
     <dependency>
       <groupId>org.springframework</groupId>
