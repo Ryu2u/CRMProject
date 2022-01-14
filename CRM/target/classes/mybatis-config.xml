@@ -4,22 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="jdbc.properties"/>
-    <settings>
+    <!--<settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
-    </settings>
+    </settings>-->
     <!--设置别名-->
 
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-              <property name="driver" value="${jdbc.driver}"/>
-              <property name="url" value="${jdbc.url}"/>
-              <property name="username" value="${jdbc.user}"/>
-              <property name="password" value="${jdbc.password}"/>
-            </dataSource>
-        </environment>
-    </environments>
+
     <mappers>
         <!--<package name="org.mybatis.example"/>-->
 

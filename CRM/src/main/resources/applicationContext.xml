@@ -9,8 +9,7 @@
        https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <!--声明德鲁伊数据库连接池-->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="driverClassName" value="${jdbc.driver}"/>
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.password}"/>
@@ -27,16 +26,18 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <property name="basePackage" value="com.bjpowernode.crm.settings.dao"/>
     </bean>
-    <!--声明事务管理器对象-->
+<!--
+
+    &lt;!&ndash;声明事务管理器对象&ndash;&gt;
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!--声明业务方法的事务属性-->
+    &lt;!&ndash;声明业务方法的事务属性&ndash;&gt;
     <tx:advice id="myAdvice" transaction-manager="transactionManager">
-        <!--配置事务属性-->
+        &lt;!&ndash;配置事务属性&ndash;&gt;
         <tx:attributes>
-            <!--设置需要使用事务方法
+            &lt;!&ndash;设置需要使用事务方法
                 method:
                     name:需要使用事务的方法名称
                     propagation:表示事务的传播级别
@@ -44,18 +45,19 @@
                     read-only:是否只读,默认false
                     rollback-for:表示需要回滚的异常,只要是运行时异常都会回滚
                                 在rollbackFor中声明的异常也会回滚
-            -->
+            &ndash;&gt;
             <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"
                        rollback-for="java.lang.NullPointerException"/>
         </tx:attributes>
     </tx:advice>
-    <!--声明aop切入点表达式:表示哪些包中的类需要使用事务-->
+    &lt;!&ndash;声明aop切入点表达式:表示哪些包中的类需要使用事务&ndash;&gt;
     <aop:config>
-        <!--表示所有service包以及其子包下的所有类-->
+        &lt;!&ndash;表示所有service包以及其子包下的所有类&ndash;&gt;
         <aop:pointcut id="servicePt" expression="execution(* com.bjpowernode.crm.settings.service.impl.*.*(..))"/>
-        <!--配置增强器,将advisor和advice连接其起来,-->
+        &lt;!&ndash;配置增强器,将advisor和advice连接其起来,&ndash;&gt;
         <aop:advisor advice-ref="myAdvice" pointcut-ref="servicePt"/>
     </aop:config>
+-->
 
 
 </beans>
