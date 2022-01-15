@@ -1,42 +1,19 @@
-package com.bjpowernode.crm.settings.domain;
+package com.cht.crm.settings.domain;
 
-/**
- * @author Ryuzu
- * @date 2022/1/7 18:57
- */
 public class User {
-    private String id;
-    private String loginAct;
-    private String name;
-    private String loginPwd;
-    private String email;
-    private String expireTime;
-    private String lockState;
-    private String deptno;
-    private String allowIps;
-    private String createTime;
-    private String createBy;
-    private String editTime;
-    private String editBy;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", loginAct='" + loginAct + '\'' +
-                ", name='" + name + '\'' +
-                ", loginPwd='" + loginPwd + '\'' +
-                ", email='" + email + '\'' +
-                ", expireTime='" + expireTime + '\'' +
-                ", lockState='" + lockState + '\'' +
-                ", deptno='" + deptno + '\'' +
-                ", allowIps='" + allowIps + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", createBy='" + createBy + '\'' +
-                ", editTime='" + editTime + '\'' +
-                ", editBy='" + editBy + '\'' +
-                '}';
-    }
+    private String id; //编号 主键
+    private String loginAct;//登录账号
+    private String name;//用户的真实姓名
+    private String loginPwd; //登录密码
+    private String email; //邮箱
+    private String expireTime; //失效时间
+    private String lockState; //锁定状态
+    private String deptno; //部门编号
+    private String allowIps; //允许访问的ip
+    private String createTime; //创建时间
+    private String createBy; //创建人
+    private String editTime; //修改时间
+    private String editBy;// 修改人
 
     public String getId() {
         return id;

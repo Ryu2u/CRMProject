@@ -1,63 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context
-       https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!--    spring 配置文件 声明service dao 工具类配置文件-->
+    <context:component-scan base-package="com.cht.crm.settings.service"/>
+    <!--    声明数据源，连接数据库 首先声明文件位置-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
-    <!--声明德鲁伊数据库连接池-->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init"
+          destroy-method="close">
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.password}"/>
-        <property name="maxActive" value="20"/>
     </bean>
-    <!--获取SqlSessionFactory-->
+    <!--    声明SqlSessionFactoryBean创建SqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!--指定mybatis配置文件的地址-->
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
     </bean>
-    <!--声明dao包下的所有接口,创建bean-->
+    <!--    声明mybatis的扫描器，创建dao对象-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-        <property name="basePackage" value="com.bjpowernode.crm.settings.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.hx.crm.workbench.dao,com.hx.crm.settings.dao"/>
     </bean>
-<!--
-
-    &lt;!&ndash;声明事务管理器对象&ndash;&gt;
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    &lt;!&ndash;声明业务方法的事务属性&ndash;&gt;
-    <tx:advice id="myAdvice" transaction-manager="transactionManager">
-        &lt;!&ndash;配置事务属性&ndash;&gt;
-        <tx:attributes>
-            &lt;!&ndash;设置需要使用事务方法
-                method:
-                    name:需要使用事务的方法名称
-                    propagation:表示事务的传播级别
-                    isolation:表示事务的隔离级别
-                    read-only:是否只读,默认false
-                    rollback-for:表示需要回滚的异常,只要是运行时异常都会回滚
-                                在rollbackFor中声明的异常也会回滚
-            &ndash;&gt;
-            <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"
-                       rollback-for="java.lang.NullPointerException"/>
-        </tx:attributes>
-    </tx:advice>
-    &lt;!&ndash;声明aop切入点表达式:表示哪些包中的类需要使用事务&ndash;&gt;
-    <aop:config>
-        &lt;!&ndash;表示所有service包以及其子包下的所有类&ndash;&gt;
-        <aop:pointcut id="servicePt" expression="execution(* com.bjpowernode.crm.settings.service.impl.*.*(..))"/>
-        &lt;!&ndash;配置增强器,将advisor和advice连接其起来,&ndash;&gt;
-        <aop:advisor advice-ref="myAdvice" pointcut-ref="servicePt"/>
-    </aop:config>
--->
-
-
 </beans>
