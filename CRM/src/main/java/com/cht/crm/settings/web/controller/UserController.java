@@ -35,7 +35,7 @@ public class UserController {
         //将密码的明文形式转换为MD5的密文形式
         loginPwd = MD5Util.getMD5(loginPwd);
         String ip = request.getRemoteAddr();
-        System.out.println(ip);
+        System.out.println(ip);//192.168.1.4
         try {
         User login = service.login(loginAct, loginPwd,ip);
             HttpSession session = request.getSession();

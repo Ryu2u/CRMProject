@@ -68,8 +68,6 @@ To change this template use File | Settings | File Templates.
                         }else{//登录失败
                             $("#msg").html(data.msg);
                         }
-
-
                     }
                 });
 
