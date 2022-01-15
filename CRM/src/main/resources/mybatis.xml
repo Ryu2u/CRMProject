@@ -9,7 +9,7 @@
     <!--   设置别名-->
 
     <mappers>
-        <package name="com.cht.crm.settings.dao"/>
+       <!-- <package name="com.cht.crm.settings.dao"/>-->
 
     </mappers>
 </configuration>

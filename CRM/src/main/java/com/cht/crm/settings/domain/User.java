@@ -1,6 +1,25 @@
 package com.cht.crm.settings.domain;
 
 public class User {
+    /*
+        关于字符串中表现得日期及时间
+        我们在市场中 常用的两种方式
+        日期: 年月日(10char) 时分秒(19char)
+            yyyy-MM-dd HH:mm:ss SSS
+
+         关于登录:
+                验证账号和密码
+                User user = 执行sql语句select count(*) from tbl_user where loginAct=? and loginPwd=?;
+                若user对象为null, 则说明账号密码错误
+                如果user对象不为null,说明账号密码正确
+                需要验证其他信息
+                从user中get到其他属性.
+                例如:
+                expireTime 失效时间
+                lockState 锁定状态
+                allowIps 允许访问的IP地址
+
+     */
     private String id; //编号 主键
     private String loginAct;//登录账号
     private String name;//用户的真实姓名
