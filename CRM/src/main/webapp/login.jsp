@@ -20,6 +20,10 @@ To change this template use File | Settings | File Templates.
     <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
     <script>
         $(function () {
+            if (window.top != window) {
+                window.top.location=window.location;
+            }
+
             //将用户文本框中的内容清空
             $("#loginAct").val("");
             //页面加载完毕后,让用户的文本框自动获得焦点
@@ -63,7 +67,7 @@ To change this template use File | Settings | File Templates.
                              */
                         if (data.success) {
                             //登录成功
-                            window.location.href="workbench/index.html";
+                            window.location.href="workbench/index.jsp";
 
                         }else{//登录失败
                             $("#msg").html(data.msg);
@@ -88,7 +92,7 @@ To change this template use File | Settings | File Templates.
         <div class="page-header">
             <h1>登录</h1>
         </div>
-        <form id="form" action="workbench/index.html" class="form-horizontal" role="form">
+        <form id="form" action="workbench/index.jsp" class="form-horizontal" role="form">
             <div class="form-group form-group-lg">
                 <div style="width: 350px;">
                     <input id="loginAct" class="form-control" type="text" placeholder="用户名" >
