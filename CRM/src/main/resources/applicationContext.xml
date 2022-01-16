@@ -25,6 +25,6 @@
     <!--    声明mybatis的扫描器，创建dao对象-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="com.cht.crm.settings.dao"/>
+        <property name="basePackage" value="com.cht.crm.settings.dao,com.cht.crm.workbench.dao"/>
     </bean>
 </beans>

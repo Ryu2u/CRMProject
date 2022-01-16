@@ -19,6 +19,8 @@
 <body>
 <script>
 
+
+
     $.ajax({
         url:"",
         data:{
@@ -30,6 +32,9 @@
 
         }
     });
+
+
+
 </script>
 </body>
 </html>
