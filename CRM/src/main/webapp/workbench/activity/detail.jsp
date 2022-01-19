@@ -52,7 +52,70 @@
             $(".myHref").mouseout(function () {
                 $(this).children("span").css("color", "#E6E6E6");
             });
+/*===============================================================================================================================*/
+            //页面加载完毕
+            //刷新remark中的数据
+            findActivityById();
+
         });
+        //获取url中的参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+
+        //根据url中返回的id 值查出对应的activity
+        function findActivityById(){
+            var id = getUrlParam("id");
+            $.ajax({
+                url:"workbench/activity/findActivityById.do",
+                data:{
+                    "id":id
+                },
+                type:"get",
+                dataType:"json",
+                success: function (data){
+                    //返回一个activity对象
+                    $("#ownerId").val(data.owner);
+                    $("#owner").html(data.activity.owner);
+                    $("#name").html(data.activity.name);
+                    $("#startDate").html(data.activity.startDate);
+                    $("#endDate").html(data.activity.endDate);
+                    $("#cost").html(data.activity.cost);
+                    $("#createBy").html(data.activity.createBy);
+                    $("#createTime").html(data.activity.createTime);
+                    $("#editBy").html(data.activity.editBy);
+                    $("#editTime").html(data.activity.editTime);
+                    $("#description").html(data.activity.description);
+                }
+            });
+
+        }
+
+
+        //查询remark的所有数据写入到页面中
+        function remarkList(){
+            $.ajax({
+                url:"workbench/activity/remarkList.do",
+                data:{//参数为owner
+                    "activityId":$("#ownerId").val()
+                },
+                type:"get",
+                dataType:"json",
+                success: function (data){
+                    //返回remark的list集合
+                    //[{remark1},{remark2}]
+                    $.each(data, function (i, n) {
+
+
+                    });
+
+                }
+            });
+
+
+        }
 
     </script>
 
@@ -69,7 +132,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">修改备注</h4>
+                <h4 class="modal-title" id="myModalLabel">修改备注2222</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
@@ -97,7 +160,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">修改市场活动</h4>
+                <h4 class="modal-title" id="myModalLabel2">修改市场活动111</h4>
             </div>
             <div class="modal-body">
 
@@ -178,44 +241,47 @@
 <!-- 详细信息 -->
 <div style="position: relative; top: -70px;">
     <div style="position: relative; left: 40px; height: 30px;">
-        <div style="width: 300px; color: gray;">所有者</div>
-        <div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>zhangsan</b></div>
+        <div  style="width: 300px; color: gray;">所有者</div>
+        <input type="hidden" id="ownerId"/>
+        <div  style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="owner"></b></div>
         <div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">名称</div>
-        <div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>发传单</b></div>
+        <div  style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="name"></b></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
     </div>
 
     <div style="position: relative; left: 40px; height: 30px; top: 10px;">
         <div style="width: 300px; color: gray;">开始日期</div>
-        <div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>2020-10-10</b></div>
+        <div  style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="startDate"></b></div>
         <div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">结束日期</div>
-        <div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>2020-10-20</b></div>
+        <div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="endDate"></b></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 20px;">
         <div style="width: 300px; color: gray;">成本</div>
-        <div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>4,000</b></div>
+        <div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="cost"></b></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -20px;"></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 30px;">
         <div style="width: 300px; color: gray;">创建者</div>
-        <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>zhangsan&nbsp;&nbsp;</b><small
-                style="font-size: 10px; color: gray;">2017-01-18 10:10:10</small></div>
+        <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b id="createBy">
+            &nbsp;</b><small id="createTime"
+                style="font-size: 10px; color: gray;"></small></div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 40px;">
         <div style="width: 300px; color: gray;">修改者</div>
-        <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>zhangsan&nbsp;&nbsp;</b><small
-                style="font-size: 10px; color: gray;">2017-01-19 10:10:10</small></div>
+        <div style="width: 500px;position: relative; left: 200px; top: -20px;">未修改过<b id="editBy">
+            &nbsp;</b><small id="editTime"
+                style="font-size: 10px; color: gray;">1111</small></div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 50px;">
         <div style="width: 300px; color: gray;">描述</div>
         <div style="width: 630px;position: relative; left: 200px; top: -20px;">
-            <b>
-                市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等
+            <b id="description">
+
             </b>
         </div>
         <div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>

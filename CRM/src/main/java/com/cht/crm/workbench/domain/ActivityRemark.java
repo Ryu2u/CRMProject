@@ -5,14 +5,14 @@ package com.cht.crm.workbench.domain;
  * @date 2022/1/16 12:01
  */
 public class ActivityRemark {
-    private String id;           //
+    private String id;           //UUID 主键
     private String noteContent;  //备注信息
-    private String createTime;   //
-    private String createBy;     //
-    private String editTime;     //
-    private String editBy;       //
+    private String createTime;   //创建时间 外键 关联tbl_activity
+    private String createBy;     //创建人 外键
+    private String editTime;     //编辑时间 外键
+    private String editBy;       //编辑人 外键
     private String editFlag;     //是否修改过的标记
-    private String activityId;   //
+    private String activityId;   //外键 关联tbl_activity owner
 
 
     public String getId() {

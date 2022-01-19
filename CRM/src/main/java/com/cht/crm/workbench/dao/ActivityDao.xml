@@ -4,12 +4,106 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cht.crm.workbench.dao.ActivityDao">
     <select id="selectUser" resultType="com.cht.crm.settings.domain.User">
-        select * from tbl_user
+        select *
+        from tbl_user
     </select>
 
     <insert id="insertActivity">
-        insert into
-        tbl_activity(id,owner,name,startDate,endDate,cost,description,createTime,createBy)
-        values(#{id},#{owner}, #{name}, #{startDate}, #{endDate}, #{cost}, #{description},#{createTime},#{createBy})
+        insert into tbl_activity(id, owner, name, startDate, endDate, cost, description, createTime, createBy)
+        values (#{id}, #{owner}, #{name}, #{startDate}, #{endDate}, #{cost}, #{description}, #{createTime}, #{createBy})
     </insert>
+
+    <select id="selectActivity" resultType="com.cht.crm.workbench.domain.Activity">
+        select *
+        from tbl_activity
+        where id = #{id}
+    </select>
+
+    <select id="selectPageList" resultType="com.cht.crm.workbench.domain.Activity">
+        select
+        a.id,
+        a.name,
+        u.name as owner,
+        a.startDate,
+        a.endDate
+        from tbl_activity a
+        join tbl_user u
+        on a.owner = u.id
+        <where>
+            <if test="activity.name!=null and activity.name!=''">
+                a.name like '%' #{activity.name} '%'
+            </if>
+            <if test="activity.owner!=null and activity.owner !=''">
+                and u.name = #{activity.owner}
+            </if>
+            <if test="activity.startDate !=null and activity.startDate !=''">
+                and a.startDate &gt; #{activity.startDate}
+            </if>
+            <if test="activity.endDate !=null and activity.endDate !=''">
+                and a.endDate &lt; #{activity.endtDate}
+            </if>
+        </where>
+        order by a.createTime desc
+        limit #{num}, #{pageSize}
+
+    </select>
+
+    <select id="selectTotal" resultType="int">
+        select
+        count(*)
+        from tbl_activity a
+        join tbl_user u
+        on a.owner = u.id
+        <where>
+            <if test="activity.name!=null and activity.name!=''">
+                a.name like '%' #{activity.name} '%'
+            </if>
+            <if test="activity.owner!=null and activity.owner !=''">
+                and u.name = #{activity.owner}
+            </if>
+            <if test="activity.startDate !=null and activity.startDate !=''">
+                and a.startDate &gt; #{activity.startDate}
+            </if>
+            <if test="activity.endDate !=null and activity.endDate !=''">
+                and a.endDate &lt; #{activity.endtDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectActivityById" resultType="com.cht.crm.workbench.domain.Activity">
+        select a.id,
+               a.name,
+               u.name as owner,
+               a.startDate,
+               a.endDate,
+               a.cost,
+               a.description,
+               a.createTime,
+               a.createBy,
+               a.editTime,
+               a.editBy
+        from tbl_activity a
+                 join tbl_user u
+                      on a.owner = u.id
+        where a.id = #{id}
+    </select>
+
+
+    <delete id="deleteActivityById">
+        delete
+        from tbl_activity
+        where id = #{id}
+    </delete>
+
+    <update id="updateActivity">
+        update tbl_activity
+        set owner=#{owner},
+            name=#{name},
+            startDate=#{startDate},
+            endDate=#{endDate},
+            cost=#{cost},
+            description=#{description}
+        where id = #{id}
+    </update>
+
 </mapper>

@@ -4,6 +4,7 @@ import com.cht.crm.settings.domain.User;
 import com.cht.crm.workbench.domain.Activity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ryuzu
@@ -14,4 +15,18 @@ public interface ActivityDao {
     List<User> selectUser();
 
     int insertActivity(Activity activity);
+
+    List<Activity> selectPageList(Map<String ,Object> map);
+
+    Integer selectTotal(Map<String ,Object> map);
+
+    Activity selectActivityById(String  id);
+
+    int deleteActivityById(String id);
+
+    Activity selectActivity(String id);
+
+    Integer updateActivity(Activity activity);
+
+
 }

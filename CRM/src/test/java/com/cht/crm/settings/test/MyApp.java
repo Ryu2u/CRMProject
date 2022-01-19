@@ -2,13 +2,29 @@ package com.cht.crm.settings.test;
 
 import com.cht.crm.utils.DateTimeUtil;
 import com.cht.crm.utils.MD5Util;
+import com.cht.crm.utils.UUIDUtil;
+import com.cht.crm.vo.PaginationVo;
+import com.cht.crm.workbench.dao.ActivityDao;
+import com.cht.crm.workbench.domain.Activity;
+import com.cht.crm.workbench.service.ActivityService;
+import com.cht.crm.workbench.service.impl.ActivityServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Ryuzu
@@ -80,6 +96,41 @@ public class MyApp {
         String useragent = "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36";
         String json = om.writeValueAsString(cookie);
         System.out.println(json);
+
+    }
+
+    @Test
+    public void testSql() throws IOException {
+
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ActivityService service = (ActivityService) applicationContext.getBean("activityServiceImpl");
+
+        Map<String,Object> map = new HashMap<>();
+        Activity activity = new Activity();
+        activity.setName("发传单");
+        map.put("activity", activity);
+        map.put("num", 0);
+        map.put("pageSize", 10);
+        service.searchPageList(map);
+
+    }
+
+    @Test
+    public void testUUId(){
+        String u1 = UUIDUtil.getUUID();
+        String u2 = UUIDUtil.getUUID();
+        System.out.println(u1);
+        System.out.println(u2);
+
+    }
+
+    @Test
+    public void testId(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ActivityService service = (ActivityService) applicationContext.getBean("activityServiceImpl");
+        Activity activityById = service.findActivityById("98229ee305b4410e84c76c361e80fa7c");
+        System.out.println(activityById);
+
 
     }
 

@@ -26,8 +26,8 @@
         data:{
 
         },
-        type:"post",
-        dataType:"",
+        type:"",
+        dataType:"json",
         success: function (data){
 
         }
