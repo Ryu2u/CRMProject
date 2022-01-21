@@ -9,8 +9,8 @@
     <!--   设置别名-->
 
     <mappers>
-        <package name="com.cht.crm.settings.dao"/>
+        <!--<package name="com.cht.crm.settings.dao"/>
         <package name="com.cht.crm.workbench.dao"/>
-        <package name="com.cht.crm.clue.dao"/>
+        <package name="com.cht.crm.clue.dao"/>-->
     </mappers>
 </configuration>
