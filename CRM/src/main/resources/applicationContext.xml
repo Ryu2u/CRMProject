@@ -8,6 +8,7 @@
     <!--    spring 配置文件 声明service dao 工具类配置文件-->
     <context:component-scan base-package="com.cht.crm.settings.service"/>
     <context:component-scan base-package="com.cht.crm.workbench.service"/>
+    <context:component-scan base-package="com.cht.crm.clue.service"/>
     <!--    声明数据源，连接数据库 首先声明文件位置-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -25,6 +26,8 @@
     <!--    声明mybatis的扫描器，创建dao对象-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="com.cht.crm.settings.dao,com.cht.crm.workbench.dao"/>
+        <property name="basePackage" value="com.cht.crm.settings.dao,
+                                            com.cht.crm.workbench.dao,
+                                            com.cht.crm.clue.dao"/>
     </bean>
 </beans>
