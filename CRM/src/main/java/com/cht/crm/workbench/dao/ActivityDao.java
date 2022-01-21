@@ -20,8 +20,6 @@ public interface ActivityDao {
 
     Integer selectTotal(Map<String ,Object> map);
 
-    Activity selectActivityById(String  id);
-
     int deleteActivityById(String id);
 
     Activity selectActivity(String id);

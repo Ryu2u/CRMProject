@@ -34,9 +34,6 @@ public class ActivityController {
     @Resource
     private ActivityService service = null;
 
-    @Resource
-    private ActivityDao dao = null;
-
 
     @ResponseBody
     @RequestMapping("/userList.do")
@@ -69,7 +66,7 @@ public class ActivityController {
 
         //添加remark
         remark.setId(remarkId);
-        remark.setActivityId(activity.getOwner());
+        remark.setActivityId(id);
         remark.setCreateTime(createTime);
         remark.setCreateBy(createBy);
 
@@ -145,23 +142,62 @@ public class ActivityController {
     public Map<String, Object> doFindActivityById(String id) {
         Map<String, Object> map = new HashMap<>();
         Activity activity = service.findActivityById(id);
-        Activity activity1 = dao.selectActivity(id);
-        String owner = activity1.getOwner();
-        map.put("owner", owner);
+
         map.put("activity", activity);
         return map;
     }
 
     @RequestMapping("/updateActivity.do")
     @ResponseBody
-    public Map<String,Boolean> doUpdateActivity(Activity activity,String activityId){
-        Map<String,Boolean> map = new HashMap<>();
-        int count = service.editActivity(activity,activityId);
+    public Map<String, Boolean> doUpdateActivity(Activity activity) {
+        Map<String, Boolean> map = new HashMap<>();
+        int count = service.editActivity(activity);
         if (count == 1) {
             map.put("success", true);
-        }else{
-        map.put("success", false);
+        } else {
+            map.put("success", false);
         }
+        return map;
+
+    }
+
+    @RequestMapping("/deleteRemark.do")
+    @ResponseBody
+    public Map<String, Boolean> doDeleteRemark(String id) {
+        Map<String, Boolean> map = new HashMap<>();
+        int count = service.removeRemarkById(id);
+        if (count == 1) {
+            map.put("success", true);
+        } else {
+            map.put("success", false);
+        }
+        return map;
+
+    }
+
+    @RequestMapping("/saveRemark.do")
+    @ResponseBody
+    public Map<String,Boolean> doSaveRemark(ActivityRemark remark,HttpSession session){
+        Map<String ,Boolean> map = new HashMap<>();
+        String id = UUIDUtil.getUUID();
+        Activity activity = service.findActivityById(remark.getActivityId());
+        String createTime = activity.getCreateTime();
+        String createBy = activity.getCreateBy();
+        String editTime = DateTimeUtil.getSysTime();
+        User user = (User) session.getAttribute("user");
+        String editBy = user.getName();
+        remark.setCreateBy(createBy);
+        remark.setCreateTime(createTime);
+        remark.setId(id);
+        remark.setEditTime(editTime);
+        remark.setEditBy(editBy);
+        int i = service.addRemark(remark);
+        if (i == 1) {
+            map.put("success", true);
+        }else{
+            map.put("success", false);
+        }
+
         return map;
 
     }

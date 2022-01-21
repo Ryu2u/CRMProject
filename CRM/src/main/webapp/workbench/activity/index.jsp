@@ -245,7 +245,6 @@
                         "endDate":$("#edit-endDate").val(),
                         "cost":$("#edit-cost").val(),
                         "description":$("#edit-description").val(),
-                        "activityId": $("#owner").val()
                     },
                     type:"post",
                     dataType:"json",

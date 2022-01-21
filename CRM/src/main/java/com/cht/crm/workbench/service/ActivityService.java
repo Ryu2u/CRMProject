@@ -25,7 +25,11 @@ public interface ActivityService {
 
     int removeActivityById(String id);
 
-    int editActivity(Activity activity,String activityId);
+    int editActivity(Activity activity);
+
+    int removeRemarkById(String id);
+
+    int addRemark(ActivityRemark remark);
 
 
 

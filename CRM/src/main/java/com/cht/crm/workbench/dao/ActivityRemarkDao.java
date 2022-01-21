@@ -1,7 +1,7 @@
 package com.cht.crm.workbench.dao;
 
+import com.cht.crm.workbench.domain.Activity;
 import com.cht.crm.workbench.domain.ActivityRemark;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,11 +15,18 @@ public interface ActivityRemarkDao {
 
     List<ActivityRemark> selectRemark(String activityId);
 
-    int deleteRemark(String id);
+    //这是activityId,删除多条记录
+    int deleteRemark(String activityId);
 
     Integer countRemarkById(String id);
 
-    Integer updateRemarkById(@Param("activityId") String activityId,@Param("owner") String owner);
+    Integer updateRemarkById(Activity activity);
+
+    int deleteRemarkById(String id);
+
+
+
+
 
 
 

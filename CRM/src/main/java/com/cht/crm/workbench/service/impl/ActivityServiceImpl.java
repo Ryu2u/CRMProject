@@ -30,7 +30,6 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityRemarkDao remarkDao = null;
 
 
-
     @Override
     public List<User> findUser() {
 
@@ -69,7 +68,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity findActivityById(String id) {
-        Activity activity = activityDao.selectActivityById(id);
+        Activity activity = activityDao.selectActivity(id);
 
         return activity;
     }
@@ -95,12 +94,26 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public int editActivity(Activity activity,String activityId) {
+    public int editActivity(Activity activity) {
         String owner = activity.getOwner();
         int count = activityDao.updateActivity(activity);
-        int count1 = remarkDao.updateRemarkById(activityId, owner);
+        remarkDao.updateRemarkById(activity);
 
 
         return count;
+    }
+
+    @Override
+    public int removeRemarkById(String id) {
+        int i = remarkDao.deleteRemarkById(id);
+
+        return i;
+    }
+
+    @Override
+    public int addRemark(ActivityRemark remark) {
+
+        int i = remarkDao.insertRemark(remark);
+        return i;
     }
 }

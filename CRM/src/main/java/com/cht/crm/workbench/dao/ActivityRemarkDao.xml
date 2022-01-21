@@ -4,26 +4,45 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cht.crm.workbench.dao.ActivityRemarkDao">
     <insert id="insertRemark">
-        insert into tbl_activity_remark(id,createTime,createBy,activityId)
-        values(#{id},#{createTime},#{createBy},#{activityId})
+        insert into tbl_activity_remark(id, noteContent, createTime, createBy, editTime, editBy, editFlag, activityId)
+        values (#{id}, #{noteContent}, #{createTime}, #{createBy}, #{editTime}, #{editBy}, 0, #{activityId})
     </insert>
 
-  <!--  <delete id="deleteRemark">
-        delete a from tbl_activity_remark a join tbl_activity b on b.id=#{id}  where b.owner=a.activityId
-    </delete>-->
+    <!--  <delete id="deleteRemark">
+          delete a from tbl_activity_remark a join tbl_activity b on b.id=#{id}  where b.owner=a.activityId
+      </delete>-->
     <delete id="deleteRemark">
-        delete  from tbl_activity_remark  where activityId=#{activityId}
+        delete
+        from tbl_activity_remark
+        where activityId = #{activityId}
     </delete>
 
-   <!-- <select id="countRemarkById" resultType="int">
-        select count(a.id) from tbl_activity_remark a join tbl_activity b on b.id=#{id} where b.owner=a.activityId
-    </select>-->
+    <select id="selectRemark" resultType="com.cht.crm.workbench.domain.ActivityRemark">
+        select *
+        from tbl_activity_remark
+        where activityId = #{activityId}
+        order by STR_TO_DATE(editTime,'%Y-%m-%d %h:%i:%s') desc
 
-    <select id="countRemarkById" resultType="int">
-        select count(*) from tbl_activity_remark  where activityId=#{activityId}
     </select>
 
-    <update id="updateRemarkById" >
-        update tbl_activity_remark set activityId = #{owner} where activityId = #{activityId}
+    <select id="countRemarkById" resultType="int">
+        select count(*)
+        from tbl_activity_remark
+        where activityId = #{activityId}
+    </select>
+
+    <update id="updateRemarkById">
+        update tbl_activity_remark
+        set createBy=#{createBy},
+            createTime=#{createTime}
+        where activityId = #{id}
     </update>
+
+    <delete id="deleteRemarkById">
+        delete
+        from tbl_activity_remark
+        where id = #{id}
+    </delete>
+
+
 </mapper>
