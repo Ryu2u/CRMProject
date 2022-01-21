@@ -17,5 +17,18 @@
     tbl_tran_remark 交易备注表
     tbl_tran_history 交易历史表
 
+对于数据字典,按照类别来分类
+    按照typeCode来进行分类
+
+    类型: 称呼 appellation
+    select * from tbl_dic_value where typeCode="appellation"
+    List<DicType> dicList = 执行sql 语句; 5条
 
 
+    类型: 线索状态 clueState
+    select * from tbl_dic_value where typeCode="clueState"
+    List<DicType> dicList = 执行sql 语句; 5条
+
+    类型: 阶段 stage
+    select * from tbl_dic_value where typeCode="stage"
+    List<DicType> dicList = 执行sql 语句; 7条
